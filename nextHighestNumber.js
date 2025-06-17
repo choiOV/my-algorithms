@@ -31,3 +31,24 @@ function nextHighestNumber(number) {
   const result = Number(str.concat(sortedStr).join(""));
   return result;
 }
+
+// 두 번째 풀이 (일부 테스트 케이스 통과하지 못함)
+function nextHighestNumber(number) {
+  const arrNum = number.toString().split("").map(Number);
+  const lastNum = arrNum.length - 1;
+
+  let i = arrNum.length - 2;
+  for (; i >= 0; i--) {
+    if (arrNum[lastNum] > arrNum[i]) {
+      [arrNum[i], arrNum[lastNum]] = [arrNum[lastNum], arrNum[i]];
+      break;
+    }
+  }
+
+  if (i < 0) return number;
+
+  const ascNum = arrNum.slice(i + 1).sort((a, b) => a - b);
+  arrNum.splice(i + 1);
+
+  return Number(arrNum.concat(ascNum).join(""));
+}
