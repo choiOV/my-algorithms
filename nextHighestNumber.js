@@ -52,3 +52,27 @@ function nextHighestNumber(number) {
 
   return Number(arrNum.concat(ascNum).join(""));
 }
+
+// 세 번째 풀이 (통과)
+function nextHighestNumber(number) {
+  const arrNum = number.toString().split("").map(Number);
+  let i = arrNum.length - 2;
+
+  while (i >= 0 && arrNum[i] >= arrNum[i + 1]) {
+    i--;
+  }
+
+  if (i < 0) return number;
+
+  let j = arrNum.length - 1;
+
+  while (arrNum[j] <= arrNum[i]) {
+    j--;
+  }
+  [arrNum[i], arrNum[j]] = [arrNum[j], arrNum[i]];
+
+  const ascNum = arrNum.splice(i + 1).reverse();
+  arrNum.push(...ascNum);
+
+  return Number(arrNum.join(""));
+}
