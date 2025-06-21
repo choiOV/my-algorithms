@@ -45,3 +45,24 @@ function compressWord(word, K) {
 
   return stack.join("");
 }
+
+// 세 번째 풀이
+function compressWord(word, K) {
+  const stack = [];
+
+  for (const str of word) {
+    const last = stack[stack.length - 1];
+
+    if (last && last.str === str) {
+      last.count += 1;
+
+      if (last.count === K) {
+        stack.pop();
+      }
+    } else {
+      stack.push({ str, count: 1 });
+    }
+  }
+
+  return stack.map(({ str, count }) => str.repeat(count)).join("");
+}
