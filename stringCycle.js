@@ -14,6 +14,7 @@ function stringCycle(s) {
     if (chunk.every((e) => e === "")) return cycle.length;
   }
 }
+
 // 두 번째 풀이 (해답을 참고한 풀이)
 function stringCycle(s) {
   // 왜 n?
