@@ -3,7 +3,7 @@
  * money를 최대한 공평하게 두 개로 나눌 때 생기는 차이의 절대값을 반환해야 한다.
  */
 
-// 첫 번째 풀이
+// 첫 번째 풀이 (일부 테스트 케이스 통과하지 못 함)
 function greatUncleKen(money) {
   const sorted = [...money].sort(([a], [b]) => b - a);
   let pocket1 = 0;
