@@ -3,15 +3,23 @@
  * 아파트와 회사를 조건에 맞게 배치할 때 주민들의 통근 거리의 합의 최솟값을 반환해야 한다.
  */
 
-// 첫 번째 풀이 (의사코드)
-/*
-1. 자료구조 탐색
-2. 회사 통근인 순으로 회사를 우선 배치한다.
-3. 그 회사 통근인이 많은 순으로 아파트를 우선 배치한다.
-4. 거리 측정 방법
-    → 해쉬를 사용한다.
-    → 키는 통근인 많은 회사
-    → 밸류는 배열, 요소는 통근인 아파트
-    → 예시: `2: [1, 1, 3]` → 거리: `1, 1, 2`가 됨
-    → `1`의 다른 회사가 있는지 꼬리물기로 탐색한다.
-*/
+// 첫 번째 풀이 (풀이 실패)
+function allocateBuildings(a, b, infos) {
+  const companyObj = {};
+  const aptObj = {};
+
+  for (const [apt, company] of infos) {
+    aptObj[apt] = aptObj[apt] + 1 || 1;
+    companyObj[company] = companyObj[company] + 1 || 1;
+  }
+
+  const sorted = infos.slice().sort((a, b) => {
+    const companyFreq = companyObj[b[1]] - companyObj[a[1]];
+    if (companyFreq !== 0) return companyFreq;
+
+    const aptFreq = aptObj[a[0]] - aptObj[b[0]];
+    if (aptFreq !== 0) return aptFreq;
+
+    return 0;
+  });
+}
