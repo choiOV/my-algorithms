@@ -23,3 +23,33 @@ function allocateBuildings(a, b, infos) {
     return 0;
   });
 }
+
+// 두 번째 풀이 (O(n2)의 시간복잡도가 발생함))
+function allocateBuildings(a, b, infos) {
+  const aptHash = {};
+  const companyHash = {};
+
+  for (const [apt, company] of infos) {
+    aptHash[apt] = (aptHash[apt] || 0) + 1;
+    companyHash[company] = (companyHash[company] || 0) + 1;
+  }
+
+  const aptFreq = Object.entries(aptHash)
+    .sort(([, freq1], [, freq2]) => freq1 - freq2)
+    .map(([aptNum]) => aptNum);
+  const companyFreq = Object.entries(companyHash)
+    .sort(([, freq1], [, freq2]) => freq2 - freq1)
+    .map(([companyNum]) => Number(companyNum));
+
+  const buildingLayout = [...aptFreq, ...companyFreq];
+
+  let distance = 0;
+  for (const [aptNum, companyNum] of infos) {
+    distance += Math.abs(
+      buildingLayout.indexOf(String(aptNum)) -
+        buildingLayout.indexOf(companyNum)
+    );
+  }
+
+  return distance;
+}
