@@ -53,3 +53,38 @@ function allocateBuildings(a, b, infos) {
 
   return distance;
 }
+
+// 세 번째 풀이 (최적화 풀이)
+function allocateBuildings(a, b, infos) {
+  const aptFreq = Array(a + 1).fill(0);
+  const compFreq = Array(b + 1).fill(0);
+
+  for (const [apt, comp] of infos) {
+    aptFreq[apt]++;
+    compFreq[comp]++;
+  }
+
+  const aptOrdered = [...Array(a).keys()]
+    .map((i) => i + 1)
+    .sort((x, y) => aptFreq[x] - aptFreq[y]);
+
+  const compOrdered = [...Array(b).keys()]
+    .map((i) => i + 1)
+    .sort((x, y) => compFreq[y] - compFreq[x]);
+
+  const position = new Map();
+  aptOrdered.forEach((no, i) => {
+    position.set(`A${no}`, i);
+  });
+
+  compOrdered.forEach((no, i) => {
+    position.set(`C${no}`, a + i);
+  });
+
+  let sum = 0;
+  for (const [apt, comp] of infos) {
+    sum += Math.abs(position.get(`A${apt}`) - position.get(`C${comp}`));
+  }
+
+  return sum;
+}
