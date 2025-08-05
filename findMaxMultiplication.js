@@ -50,3 +50,25 @@ function findMaxMultiplication(N) {
 
   return [bestNumberSystem, maxMultiplication];
 }
+
+// 세 번째 풀이 (일부 식별자명 개선)
+function findMaxMultiplication(N) {
+  let maxMultiplication = 0;
+  let highestK = 0;
+
+  for (let k = 2; k <= 10; k++) {
+    const multiplication = [...N.toString(k)]
+      .map(Number)
+      .reduce((acc, val) => (val === 0 ? acc : acc * val), 1);
+
+    if (
+      multiplication > maxMultiplication ||
+      (multiplication === maxMultiplication && k > highestK)
+    ) {
+      highestK = k;
+      maxMultiplication = multiplication;
+    }
+  }
+
+  return [highestK, maxMultiplication];
+}
