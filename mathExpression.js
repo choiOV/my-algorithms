@@ -16,3 +16,36 @@
 3. 의사코드 3
     1. 모든 가능한 괄호 위치를 사용해본다.
 */
+
+// 두 번째 풀이 (해답을 참고한 풀이)
+function mathExpression(expression) {
+  let converted = "";
+  for (const char of expression) {
+    converted += char === "x" ? "*" : char;
+  }
+
+  const numCount = (converted.length + 1) >> 1;
+  let maxResult = -Infinity;
+
+  for (let i = 0; i < numCount; i++) {
+    for (let j = i; j < numCount; j++) {
+      const left = i * 2;
+      const right = j * 2;
+
+      const candidate =
+        converted.slice(0, left) +
+        "(" +
+        converted.slice(left, right + 1) +
+        ")" +
+        converted.slice(right + 1);
+
+      const value = eval(candidate);
+
+      if (value > maxResult) {
+        maxResult = value;
+      }
+    }
+  }
+
+  return maxResult;
+}
